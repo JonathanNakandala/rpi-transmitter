@@ -1,24 +1,26 @@
 package com.example.jonathan.rpi;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -134,6 +136,66 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void saveIP(View view) {
+
+        Button storeRPIAddressButton = (Button) findViewById(R.id.storeRPIAddress);
+        EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
+        EditText portEditText = (EditText) findViewById(R.id.portNumber);
+
+
+        String ip = ipAddressEditText.getText().toString();
+        String port = portEditText.getText().toString();
+        Context context = getApplicationContext();
+        CharSequence text = "Your IP: " + ip + " Your Port:" + port;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+//        sendNetwork send = new sendNetwork();
+//        try {
+//            send.server();
+//        } catch (IOException e) {
+//            Log.e("YOU GOOFed", "SOCKET EXCEPTION");
+//        }
+        new sendNetwork().execute();
+
+
+    }
+
+    public void sendNotification(View view) {
+
+        // Use NotificationCompat.Builder to set up our notification.
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        //icon appears in device notification bar and right hand corner of notification
+        builder.setSmallIcon(R.drawable.ic_drawer);
+
+        // This intent is fired when notification is clicked
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com/"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // Set the intent that will fire when the user taps the notification.
+        builder.setContentIntent(pendingIntent);
+
+        // Large icon appears on the left of the notification
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_drawer));
+
+        // Content title, which appears in large type at the top of the notification
+        builder.setContentTitle("Harro");
+
+        // Content text, which appears in smaller text below the title
+        builder.setContentText("HIIIII");
+
+        // The subtext, which appears under the text on newer devices.
+        // This will show-up in the devices with Android 4.2 and above only
+        builder.setSubText("Tap to view documentation about notifications.");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Will display the notification in the notification bar
+        notificationManager.notify(1, builder.build());
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -143,6 +205,9 @@ public class MainActivity extends AppCompatActivity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -154,9 +219,6 @@ public class MainActivity extends AppCompatActivity
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override
@@ -172,22 +234,6 @@ public class MainActivity extends AppCompatActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-    }
-    public void saveIP(View view){
-
-        Button storeRPIAddressButton =  (Button) findViewById(R.id.storeRPIAddress);
-        EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
-        EditText portEditText = (EditText) findViewById(R.id.portNumber);
-
-
-        String ip = ipAddressEditText.getText().toString();
-        String port = portEditText.getText().toString();
-        Context context = getApplicationContext();
-        CharSequence text = "Your IP: " + ip + " Your Port:" + port;
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 
 }
