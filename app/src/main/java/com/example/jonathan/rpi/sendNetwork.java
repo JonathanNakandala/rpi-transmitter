@@ -14,13 +14,17 @@ import java.net.InetAddress;
  */
 public class sendNetwork extends AsyncTask<String, Void, String> {
 
-    protected String doInBackground(String... u) {
+
+    protected String doInBackground(String... params) {
         // do something in background
+        //String.
+
         try {
-            server();
+            server(params[0], params[1]);
         } catch (IOException e) {
             Log.e("YOU GOOFed", "SOCKET EXCEPTION");
         }
+
         return null;
     }
 
@@ -39,16 +43,16 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
     }
 
 
-    public void server() throws IOException {
+    public void server(String Ip, String SPort) throws IOException {
         byte[] send_data = new byte[1024];
         String str = "SENT THIS FROM MY MOBILE";
         DatagramSocket client_socket = new DatagramSocket();
-        InetAddress IPAddress = InetAddress.getByName("192.168.0.2");
-
+        InetAddress IPAddress = InetAddress.getByName(Ip);
+        int Port = Integer.parseInt(SPort);
         send_data = str.getBytes();
 
 
-        DatagramPacket send_packet = new DatagramPacket(send_data, str.length(), IPAddress, 45455);
+        DatagramPacket send_packet = new DatagramPacket(send_data, str.length(), IPAddress, Port);
         client_socket.send(send_packet);
 
         client_socket.close();

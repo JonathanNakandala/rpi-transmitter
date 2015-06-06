@@ -151,17 +151,16 @@ public class MainActivity extends AppCompatActivity
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-//        sendNetwork send = new sendNetwork();
-//        try {
-//            send.server();
-//        } catch (IOException e) {
-//            Log.e("YOU GOOFed", "SOCKET EXCEPTION");
-//        }
-        new sendNetwork().execute();
+
+        String IP = "192.168.0.2";
+        String PORT = "45455";
+        new sendNetwork().execute(IP, PORT);
+        //sendNotification(view);
 
 
     }
 
+    // Creates a Notification
     public void sendNotification(View view) {
 
         // Use NotificationCompat.Builder to set up our notification.
