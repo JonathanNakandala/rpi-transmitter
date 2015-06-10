@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        String IP = "192.168.0.2";
+        String IP = "192.168.0.9";
         String PORT = "45455";
         new sendNetwork().execute(IP, PORT);
         //sendNotification(view);

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Date;
 
 /**
  * sendNetwork Class used to communicate with RPI.
@@ -45,8 +46,13 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
 
     public void server(String Ip, String SPort) throws IOException {
         byte[] send_data = new byte[1024];
-        String str = "SENT THIS FROM MY MOBILE";
-        DatagramSocket client_socket = new DatagramSocket();
+
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        String str = "Toast"; //date.toString();
+
+        //String str = "SENT  FROM MY MOBILE";
+        DatagramSocket client_socket = new DatagramSocket(45455);
         InetAddress IPAddress = InetAddress.getByName(Ip);
         int Port = Integer.parseInt(SPort);
         send_data = str.getBytes();
@@ -55,8 +61,17 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
         DatagramPacket send_packet = new DatagramPacket(send_data, str.length(), IPAddress, Port);
         client_socket.send(send_packet);
 
-        client_socket.close();
 
+        byte[] buf = new byte[50];
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        client_socket.receive(packet);
+        buf = packet.getData();
+        
+        String S = new String(buf).trim();
+        Log.wtf("LOOK HERE!!!!!", "Received" + S);
+
+        client_socket.close();
+        Log.wtf("cl", "CLosed!!!!!");
 
     }
 }
