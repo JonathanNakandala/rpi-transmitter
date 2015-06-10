@@ -17,13 +17,11 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
 
 
     protected String doInBackground(String... params) {
-        // do something in background
-        //String.
-
+        //Params are IPAddress and Port Passed from editText
         try {
             server(params[0], params[1]);
         } catch (IOException e) {
-            Log.e("YOU GOOFed", "SOCKET EXCEPTION");
+            Log.wtf("IOException", "Failed at server method");
         }
 
         return null;
@@ -34,6 +32,7 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
     }
 
     public void onProgressUpdate(Integer... args) {
+
 
     }
 
@@ -51,7 +50,7 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
         Date date = new Date(millis);
         String str = "Toast"; //date.toString();
 
-        //String str = "SENT  FROM MY MOBILE";
+
         DatagramSocket client_socket = new DatagramSocket(45455);
         InetAddress IPAddress = InetAddress.getByName(Ip);
         int Port = Integer.parseInt(SPort);
@@ -68,10 +67,10 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
         buf = packet.getData();
 
         String S = new String(buf).trim();
-        Log.wtf("LOOK HERE!!!!!", "Received" + S);
+        Log.wtf("Receive", "Message: " + S);
 
         client_socket.close();
-        Log.wtf("cl", "CLosed!!!!!");
+        Log.wtf("Socket", "Closed!!!!!");
 
     }
 }
