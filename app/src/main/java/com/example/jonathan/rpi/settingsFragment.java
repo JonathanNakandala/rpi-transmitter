@@ -1,18 +1,12 @@
 package com.example.jonathan.rpi;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import java.net.InetAddress;
 
 
 /**
@@ -44,6 +38,10 @@ public class settingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    public settingsFragment() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -62,10 +60,6 @@ public class settingsFragment extends Fragment {
         return fragment;
     }
 
-    public settingsFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +68,10 @@ public class settingsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         // EditTexts and Buttons
-        Button storeRPIAddressButton =  (Button) getActivity().findViewById(R.id.storeRPIAddress);
-        final EditText ipAddressEditText = (EditText) getActivity().findViewById(R.id.ipAddress);
-        EditText portEditText = (EditText) getActivity().findViewById(R.id.portNumber);
+        //Button storeRPIAddressButton =  (Button) getActivity().findViewById(R.id.storeRPIAddress);
+        //final EditText ipAddressEditText = (EditText) getActivity().findViewById(R.id.ipAddress);
+        //EditText portEditText = (EditText) getActivity().findViewById(R.id.portNumber);
+
 
 //        storeRPIAddressButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

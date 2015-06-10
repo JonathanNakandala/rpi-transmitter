@@ -21,7 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -137,10 +137,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void saveIP(View view) {
-
+        //UI Objects
         Button storeRPIAddressButton = (Button) findViewById(R.id.storeRPIAddress);
         EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
         EditText portEditText = (EditText) findViewById(R.id.portNumber);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         //Lowercase is input text. Uppercase is hardcoded
         String ip = ipAddressEditText.getText().toString();
@@ -148,18 +149,16 @@ public class MainActivity extends AppCompatActivity
         String IP = "192.168.0.9";
         String PORT = "45455";
 
-
+        //progressBar.setVisibility(View.INVISIBLE);
         Context context = getApplicationContext();
-        CharSequence text = "Your IP: " + ip + " Your Port:" + port;
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-
-
-        new sendNetwork().execute(IP, PORT);
+//        CharSequence text = "Your IP: " + ip + " Your Port:" + port;
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+        progressBar.setVisibility(View.VISIBLE);
+        new sendNetwork(progressBar, context).execute(IP, PORT);
         //sendNotification(view);
-
 
     }
 
