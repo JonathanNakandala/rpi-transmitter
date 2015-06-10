@@ -66,7 +66,7 @@ public class sendNetwork extends AsyncTask<String, Void, String> {
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         client_socket.receive(packet);
         buf = packet.getData();
-        
+
         String S = new String(buf).trim();
         Log.wtf("LOOK HERE!!!!!", "Received" + S);
 
