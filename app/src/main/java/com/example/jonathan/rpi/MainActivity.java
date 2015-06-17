@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -157,9 +158,21 @@ public class MainActivity extends AppCompatActivity
 //        Toast toast = Toast.makeText(context, text, duration);
 //        toast.show();
         progressBar.setVisibility(View.VISIBLE);
-        new sendNetwork(progressBar, context).execute(IP, PORT);
+        new testNetwork(progressBar, context).execute(IP, PORT);
         //sendNotification(view);
 
+    }
+
+    public void sendData(String Message) {
+        // new testNetwork()
+        EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
+        EditText portEditText = (EditText) findViewById(R.id.portNumber);
+
+//        String ip = ipAddressEditText.getText().toString();
+//        String port = portEditText.getText().toString();
+        String IP = "192.168.0.2";
+        String PORT = "45455";
+        new sendNetwork().execute(IP, PORT, Message);
     }
 
     // Creates a Notification
@@ -195,6 +208,36 @@ public class MainActivity extends AppCompatActivity
 
         // Will display the notification in the notification bar
         notificationManager.notify(1, builder.build());
+    }
+
+    //Switch 0
+    public void pin0buttonclicked(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            // Enable vibrate
+            sendData("0 on");
+            //  v.vibrate(20000);
+        } else {
+            // Disable vibrate
+            sendData("0 off");
+            // v.cancel();
+        }
+    }
+
+    // Switch 1
+    public void pin1buttonclicked(View view) {
+        boolean on = ((Switch) view).isChecked();
+        // Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (on) {
+            // Enable vibrate
+            sendData("1 on");
+            //  v.vibrate(20000);
+        } else {
+            // Disable vibrate
+            sendData("1 off");
+            // v.cancel();
+        }
+
     }
 
     /**
