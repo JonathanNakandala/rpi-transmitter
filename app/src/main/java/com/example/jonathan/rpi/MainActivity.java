@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,9 @@ import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static final String PREFS_NAME = "rpi-transmitter-pref-file";
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -48,13 +53,16 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
+    //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // RelativeLayout lt = (RelativeLayout) findViewById( R.id.container );
+        // LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     // Edit Texts
-
-
+        View view;
+        // EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
+        // EditText portEditText = (EditText) findViewById(R.id.portNumber);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -64,6 +72,15 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Stored Preference Data
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String ipAddress = settings.getString("IPAddress", "192.168.0.22");
+        String portNumber = settings.getString("PortNumber", "7777");
+        Log.wtf("GUTENTAG", settings.getString("IPAddress", "192.168.0.22"));
+        //ipAddressEditText.getText().toString();
+        //portEditText.setText(portNumber);
+
     }
 
     @Override
@@ -124,7 +141,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item clicks here. The action bar will Mercury could still bring a huge crowd to its feet.
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -138,19 +155,27 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void saveIP(View view) {
+        //Preferences
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
         //UI Objects
         Button storeRPIAddressButton = (Button) findViewById(R.id.storeRPIAddress);
         EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
         EditText portEditText = (EditText) findViewById(R.id.portNumber);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+
         //Lowercase is input text. Uppercase is hardcoded
         String ip = ipAddressEditText.getText().toString();
         String port = portEditText.getText().toString();
-        String IP = "192.168.0.9";
-        String PORT = "45455";
+        //Store Preferences
+        editor.putString("IPAddress", ip).apply();
+        editor.putString("PortNumber", port).apply();
+        editor.commit();
 
-        //progressBar.setVisibility(View.INVISIBLE);
+        // Details to Send
+        String ipAdd = settings.getString("IPAddress", "192.168.0.22");
+        String portNum = settings.getString("PortNumber", "45455");
         Context context = getApplicationContext();
 //        CharSequence text = "Your IP: " + ip + " Your Port:" + port;
 //        int duration = Toast.LENGTH_SHORT;
@@ -158,7 +183,9 @@ public class MainActivity extends AppCompatActivity
 //        Toast toast = Toast.makeText(context, text, duration);
 //        toast.show();
         progressBar.setVisibility(View.VISIBLE);
-        new testNetwork(progressBar, context).execute(IP, PORT);
+        Log.wtf("GUTENTAG2", ipAdd);
+        Log.wtf("GUTENTAG2", portNum);
+        new testNetwork(progressBar, context).execute(ipAdd, portNum);
         //sendNotification(view);
 
     }
@@ -167,11 +194,11 @@ public class MainActivity extends AppCompatActivity
         // new testNetwork()
         EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
         EditText portEditText = (EditText) findViewById(R.id.portNumber);
-
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 //        String ip = ipAddressEditText.getText().toString();
 //        String port = portEditText.getText().toString();
-        String IP = "192.168.0.2";
-        String PORT = "45455";
+        String IP = settings.getString("IPAddress", "192.168.0.2");
+        String PORT = settings.getString("PortNumber", "45455");
         new sendNetwork().execute(IP, PORT, Message);
     }
 

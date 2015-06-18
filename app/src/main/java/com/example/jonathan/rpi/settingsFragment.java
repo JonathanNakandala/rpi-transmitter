@@ -1,12 +1,14 @@
 package com.example.jonathan.rpi;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 
 /**
@@ -66,7 +68,9 @@ public class settingsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+
         // EditTexts and Buttons
         //Button storeRPIAddressButton =  (Button) getActivity().findViewById(R.id.storeRPIAddress);
         //final EditText ipAddressEditText = (EditText) getActivity().findViewById(R.id.ipAddress);
@@ -93,9 +97,27 @@ public class settingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View View = inflater.inflate(R.layout.fragment_settings, container, false);
 
 
+        // lol = (EditText) getActivity().findViewById(R.id.ipAddress);
+        //     lol.setText("PARTAY TONITE");
+
+        return View;
+
+    }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        EditText ipEditText;
+        EditText portEditText;
+        SharedPreferences settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        ipEditText = (EditText) view.findViewById(R.id.ipAddress);
+        portEditText = (EditText) view.findViewById(R.id.portNumber);
+
+        ipEditText.setText(settings.getString("IPAddress", "Enter IP Address"));
+        portEditText.setText(settings.getString("PortNumber", "Enter Port Number"));
 
     }
 
