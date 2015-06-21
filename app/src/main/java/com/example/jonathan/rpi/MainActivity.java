@@ -265,6 +265,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void AllOnButtonPress(View view) {
+        sendData("All on");
+    }
+
+    public void AllOffButtonPress(View view) {
+        sendData("All off");
+    }
+
+
     /**
      * A placeholder fragment containing a simple view.
      */

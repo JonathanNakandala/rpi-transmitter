@@ -85,6 +85,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:onClick="AllOnButtonPress"
         android:text="@string/AllOnButtonText" />
 
     <Button
@@ -94,6 +95,7 @@
         android:layout_alignBottom="@+id/AllOnButton"
         android:layout_toLeftOf="@+id/AllOnButton"
         android:layout_toStartOf="@+id/AllOnButton"
+        android:onClick="AllOffButtonPress"
         android:text="@string/AllOffButtonText" />
     <!-- android:drawableLeft="@drawable/ic_visibility_black_48dp : Maybe an icon?-->
 </RelativeLayout>
