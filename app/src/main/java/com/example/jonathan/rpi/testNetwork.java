@@ -74,13 +74,13 @@ public class testNetwork extends AsyncTask<String, Integer, String> {
 
     public void server(String Ip, String SPort) throws IOException {
 
-        byte[] send_data = new byte[1024];
+        byte[] send_data;
         byte[] receive_data = new byte[50];
         InetAddress IPAddress = InetAddress.getByName(Ip);
         int Port = Integer.parseInt(SPort);
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
-        String str = "Toast"; //date.toString();
+        String str = "Connect Request"; //date.toString();
 
 
         DatagramSocket client_socket = new DatagramSocket(Port);
