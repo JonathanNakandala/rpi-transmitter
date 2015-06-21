@@ -13,7 +13,7 @@ import java.net.InetAddress;
  * Background asynctask that sends input datagram via UDP
  */
 public class sendNetwork extends AsyncTask<String, Integer, Void> {
-    {
+    static {
     }
 
 
