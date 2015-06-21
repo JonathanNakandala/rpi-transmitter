@@ -42,27 +42,21 @@ public class MainActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
     //settingsFragments Strings
-    private String ipAddress;
-    private String port;
-
-
-
-    public void onsettingsFragmentEditTextChanged(String string, String string2) {
-        ipAddress = string;
-        port = string2;
-    }
+//    private String ipAddress;
+//    private String port;
+//
+//
+//
+//    public void onsettingsFragmentEditTextChanged(String string, String string2) {
+//        ipAddress = string;
+//        port = string2;
+//    }
 
 
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // RelativeLayout lt = (RelativeLayout) findViewById( R.id.container );
-        // LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    // Edit Texts
-        View view;
-        // EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
-        // EditText portEditText = (EditText) findViewById(R.id.portNumber);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -78,8 +72,6 @@ public class MainActivity extends AppCompatActivity
         String ipAddress = settings.getString("IPAddress", "192.168.0.22");
         String portNumber = settings.getString("PortNumber", "7777");
         Log.wtf("GUTENTAG", settings.getString("IPAddress", "192.168.0.22"));
-        //ipAddressEditText.getText().toString();
-        //portEditText.setText(portNumber);
 
     }
 
@@ -120,9 +112,10 @@ public class MainActivity extends AppCompatActivity
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        //actionBar.setDisplayShowTitleEnabled(true);
+        if (actionBar != null) {
+            actionBar.setTitle(mTitle);
+        }
     }
 
 
@@ -141,14 +134,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will Mercury could still bring a huge crowd to its feet.
+        // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-// nmj
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -193,8 +182,6 @@ public class MainActivity extends AppCompatActivity
         EditText ipAddressEditText = (EditText) findViewById(R.id.ipAddress);
         EditText portEditText = (EditText) findViewById(R.id.portNumber);
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-//        String ip = ipAddressEditText.getText().toString();
-//        String port = portEditText.getText().toString();
         String IP = settings.getString("IPAddress", "192.168.0.2");
         String PORT = settings.getString("PortNumber", "45455");
         new sendNetwork().execute(IP, PORT, Message);
@@ -239,28 +226,19 @@ public class MainActivity extends AppCompatActivity
     public void pin0buttonclicked(View view) {
         boolean on = ((Switch) view).isChecked();
         if (on) {
-            // Enable vibrate
             sendData("0 on");
-            //  v.vibrate(20000);
         } else {
-            // Disable vibrate
             sendData("0 off");
-            // v.cancel();
         }
     }
 
     // Switch 1
     public void pin1buttonclicked(View view) {
         boolean on = ((Switch) view).isChecked();
-        // Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (on) {
-            // Enable vibrate
             sendData("1 on");
-            //  v.vibrate(20000);
         } else {
-            // Disable vibrate
             sendData("1 off");
-            // v.cancel();
         }
 
     }
@@ -302,8 +280,8 @@ public class MainActivity extends AppCompatActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
 
         @Override
