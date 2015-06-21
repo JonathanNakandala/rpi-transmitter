@@ -16,4 +16,5 @@
 
     <string name="SwitchName_0">Orange Light</string>
     <string name="SwitchName_1">Blue Light</string>
+    <string name="SwitchListTitle">Devices</string>
 </resources>
