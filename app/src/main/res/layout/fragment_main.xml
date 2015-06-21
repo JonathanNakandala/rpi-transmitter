@@ -78,4 +78,22 @@
         </RelativeLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/AllOnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/AllOnButtonText" />
+
+    <Button
+        android:id="@+id/AllOffButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/AllOnButton"
+        android:layout_toLeftOf="@+id/AllOnButton"
+        android:layout_toStartOf="@+id/AllOnButton"
+        android:text="@string/AllOffButtonText" />
+    <!-- android:drawableLeft="@drawable/ic_visibility_black_48dp : Maybe an icon?-->
 </RelativeLayout>
