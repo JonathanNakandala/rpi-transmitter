@@ -1,6 +1,7 @@
 package com.example.jonathan.rpi;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -248,11 +250,25 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
+            Switch Switch0 = (Switch) getActivity().findViewById(R.id.pin_0_switch);
+            Switch Switch1 = (Switch) getActivity().findViewById(R.id.pin_1_switch);
+
+
             Toast.makeText(getActivity(), "Haven't done this yet =D", Toast.LENGTH_SHORT).show();
             SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
             String IP = settings.getString("IPAddress", "192.168.0.2");
             String PORT = settings.getString("PortNumber", "45455");
-            new refreshNetwork().execute(IP, PORT);
+            Context cont = getActivity();
+            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            ViewGroup container;
+
+            View myFragmentView = inflater.inflate(R.layout.fragment_main, null);
+
+
+            new refreshNetwork(getActivity(), getView()).execute(IP, PORT);
+
+
+
             return true;
         }
 
