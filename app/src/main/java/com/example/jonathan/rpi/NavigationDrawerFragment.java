@@ -27,7 +27,7 @@ import android.widget.Toast;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
+    public static final String PREFS_NAME = "rpi-transmitter-pref-file";
     /**
      * Remember the position of the selected item.
      */
@@ -249,6 +249,10 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (item.getItemId() == R.id.action_example) {
             Toast.makeText(getActivity(), "Haven't done this yet =D", Toast.LENGTH_SHORT).show();
+            SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+            String IP = settings.getString("IPAddress", "192.168.0.2");
+            String PORT = settings.getString("PortNumber", "45455");
+            new refreshNetwork().execute(IP, PORT);
             return true;
         }
 
